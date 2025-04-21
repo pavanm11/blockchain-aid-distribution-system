@@ -1,1 +1,65 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain-Based AI Aid System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+
+</head>
+<body>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#login">Login</a>
+        <a href="#beneficiary-dashboard">Dashboard</a>
+        <a href="#admin-panel">Admin Panel</a>
+    </nav>
+
+    <h1>Blockchain-Based AI Aid System</h1>
+
+    <!-- Login Page -->
+    <section id="login">
+        <h1>Login</h1>
+        <input type="text" id="user-address" placeholder="Enter Your Ethereum Address">
+        <button onclick="login()">Login</button>
+    </section>
+
+    <!-- Beneficiary Dashboard -->
+    <section id="beneficiary-dashboard">
+        <h2>Beneficiary Dashboard</h2>
+        <input type="text" id="user-id" placeholder="Enter your ID">
+        <button onclick="checkAid()">Check Aid</button>
+        <p id="aid-balance"></p>
+    </section>
+
+    <!-- Admin Panel -->
+    <section id="admin-panel">
+        <h2>Admin Panel</h2>
+        <input type="text" id="register-address" placeholder="Beneficiary Address">
+        <button onclick="registerBeneficiary()">Register Beneficiary</button>
+
+        <input type="text" id="recipient" placeholder="Recipient Address">
+        <input type="number" id="amount" placeholder="Aid Amount">
+        <button onclick="grantAid()">Grant Aid</button>
+    </section>
+
+    <!-- AI Aid Prediction -->
+    <section id="ai-aid-prediction">
+        <h2>AI-Based Aid Prediction</h2>
+        <input type="number" id="region" placeholder="Region">
+        <input type="number" id="previous-aid" placeholder="Previous Aid">
+        <input type="number" id="income-level" placeholder="Income Level">
+        <input type="number" id="population-affected" placeholder="Population Affected">
+        <input type="number" id="crisis-severity" placeholder="Crisis Severity">
+        <input type="number" id="requested-aid" placeholder="Requested Aid">
+        <button onclick="requestAidFromAI()">Predict Aid</button>
+        <p id="predicted-aid"></p>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4/web3.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
