@@ -9,7 +9,6 @@ This project is a decentralized aid distribution platform enhanced with AI. It e
 ## Features
 - Smart contract-based aid tracking (Solidity)
 - Flask backend with Random Forest model for prediction
-- IPFS integration for document storage
 - Static frontend for user interaction
 
 ## Tech Stack
