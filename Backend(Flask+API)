@@ -1,0 +1,42 @@
+##train_model.py###
+it is to train my data in backend to predict the aid required by beneficiary..
+
+
+import pandas as pd
+import numpy as np
+import joblib
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.preprocessing import StandardScaler
+
+# 1️⃣ Create Synthetic Dataset
+data = pd.DataFrame({
+    "region": np.random.randint(1, 5, 100),
+    "previous_aid": np.random.uniform(0, 1000, 100),
+    "income_level": np.random.uniform(1000, 50000, 100),
+    "population_affected": np.random.randint(100, 10000, 100),
+    "crisis_severity": np.random.uniform(1, 10, 100),
+    "requested_aid": np.random.uniform(500, 5000, 100),
+    "allocated_aid": np.random.uniform(500, 5000, 100)
+})
+
+# 2️⃣ Prepare Features & Target
+X = data.drop(columns=["allocated_aid"])
+y = data["allocated_aid"]
+
+# 3️⃣ Split Data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 4️⃣ Scale Features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+
+# 5️⃣ Train the Model
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train_scaled, y_train)
+
+# 6️⃣ Save Model & Scaler
+joblib.dump(model, "aid_prediction_model.pkl")
+joblib.dump(scaler, "scaler.pkl")
+
+print("✅ Model and Scaler saved successfully!")
