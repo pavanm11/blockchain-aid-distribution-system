@@ -40,3 +40,63 @@ joblib.dump(model, "aid_prediction_model.pkl")
 joblib.dump(scaler, "scaler.pkl")
 
 print("✅ Model and Scaler saved successfully!")
+
+
+..........after training the model successfully
+
+##server.py##
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import joblib
+import numpy as np
+
+app = Flask(__name__)
+CORS(app)
+
+# Load model and scaler
+try:
+    model = joblib.load("aid_prediction_model.pkl")
+    scaler = joblib.load("scaler.pkl")
+    print("✅ Model and scaler loaded successfully")
+except Exception as e:
+    print(f"❌ Error loading model or scaler: {e}")
+    model = None
+    scaler = None
+
+@app.route("/")
+def home():
+    return "✅ AI Aid Prediction Backend Running!"
+
+@app.route("/predict-aid", methods=["POST"])
+def predict_aid():
+    if model is None or scaler is None:
+        return jsonify({"error": "Model or scaler not loaded"}), 500
+
+    try:
+        data = request.json
+
+        features = np.array([
+            float(data["region"]),
+            float(data["previous_aid"]),
+            float(data["income_level"]),
+            float(data["population_affected"]),
+            float(data["crisis_severity"]),
+            float(data["requested_aid"])
+        ]).reshape(1, -1)
+
+        # Scale input
+        features_scaled = scaler.transform(features)
+
+        # Predict
+        predicted_aid = model.predict(features_scaled)[0]
+        return jsonify({"predicted_aid": float(predicted_aid)})
+
+    except KeyError:
+        return jsonify({"error": "Missing required fields"}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)
+
